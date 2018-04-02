@@ -38,8 +38,10 @@
       <pubDate>Sat, 26 Aug 2017 17:28:30 +0800</pubDate>
       
       <guid>https://cocoaroger.github.io/post/hugo-deploy/</guid>
-      <description> Hugo 自动化部署脚本 deploy.py 是 coderzh 写的，非常棒
-以下是我遇到的问题  gitcafe 现在是 coding.net git 项目必须要是新建的，没有任何内容的，否则会遇到一些问题，我最后是删除了之前的项目，新建的项目才搞定了  </description>
+      <description>Hugo 自动化部署脚本 deploy.py 是 coderzh 写的
+脚本路径：https://github.com/coderzh/coderzh-hugo-blog/blob/master/deploy.py
+原理 deploy.py 会自动执行 hugo 命令生成静态站点，然后将生成的文件拷贝到上层的一个目录里，然后，在那个目录里将文件 push 到你指定的 Git Repository 里。
+使用方法  将 deploy.py 放到你的 Hugo 站点目录。（和 config.yaml 等文件放一起） 编辑 deploy.py 文件，修改你要部署到的 Git Repository：  GIT_REPO = [ # [别名, 分支名, Git Repo 路径] [&#39;origin&#39;, &#39;gh-pages&#39;, &#39;git@github.com:coderzh/hugo-blog-deployed.git&#39;], [&#39;gitcafe&#39;, &#39;gh-pages&#39;, &#39;git@coding.net:coderzh/coderzh-hugo-blog.git&#39;], ] # 部署到哪里，相对上一级目录。比如下面的配置，会部署到 ../gh-pages 目录里 DEPLOY_DIR = &#39;gh-pages&#39;   如果你的网站需要指定皮肤，需要在 config 文件中指定 theme 。因为我的脚本在生成静态文件时并不会指定皮肤。  theme: &amp;quot;rapid&amp;quot;  第一次执行，使用 first 参数，它会做一些初始化的操作。并使用 -t 表示只是测试一下，并不会真的 push 。  python deploy.</description>
     </item>
     
     <item>
