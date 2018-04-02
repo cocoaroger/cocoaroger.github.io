@@ -6,17 +6,35 @@
     <description>Recent content on cocoaroger</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Sep 2017 14:11:54 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 01 Apr 2018 16:41:53 +0800</lastBuildDate>
     
 	<atom:link href="https://cocoaroger.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>iOS开发简历</title>
+      <link>https://cocoaroger.github.io/post/resume/</link>
+      <pubDate>Sun, 01 Apr 2018 16:41:53 +0800</pubDate>
+      
+      <guid>https://cocoaroger.github.io/post/resume/</guid>
+      <description>联系方式  手机：17338665021 Email：coacoaroger@gmail.com  个人信息  吴宣强/男/1990 本科/重庆理工大学软件工程系 工作年限：5年 技术博客：https://cocoaroger.github.io/ Github：https://github.com/cocoaroger 期望职位：iOS开发工程师 期望城市：重庆/成都  工作经历 宁波搜布信息科技有限公司(上海)(2016.6 ~ 2018.1) 搜布APP  负责重构项目架构，制定OC编写规范，使代码更易于维护，便于多人协同开发 实践组件化开发，通过中间件的方式声明接口，提高项目的可读性和可维护性 开发登录注册优化、布友圈、店铺主页功能模块 布友圈模块中，使用了YYKit的异步加载方案，保证列表在多图、多文本的复杂情况下仍保持60fps 店铺主页中遇到ScrollView滚动冲突，最终采用通知的方式，在合适的滚动时机，通知内外ScrollView是否可滚动，从而达到类似淘宝店铺主页效果  CRM(Swift)  独立负责项目架构和功能开发 熟练运用Swift各种特性，函数式编程、optional、enum定义网络请求接口、typealias等 版本迭代优化  上海友闲信息科技有限公司(2014.12 ~ 2015.8) 玩票卖家APP  负责项目架构和功能开发 使用科大讯飞语音做类似滴滴抢单播报 版本迭代优化  重庆汇展网络技术有限公司(2014.12 ~ 2015.8) 淘会场  负责大部分封装UI组件和功能开发 版本迭代优化  重庆掌龙科技有限公司(2013.7 ~ 2014.12) 乐途直营店  独立负责项目架构和功能开发 版本迭代优化  技能清单  熟练使用Objective-C、Swift，了解JavaScript、Kotlin、Java、React Native 熟悉Objective-C内存管理机制、Runtime、Runloop 熟悉OC第三方库：AFNetworking、SDWebImage、Masonry、MJRefresh、MJExtention等 熟悉Swift第三方库：Alamofire、Kingfisher、SnapKit、SwiftyJSON、ObjectMapper等 版本管理：Git、SVN、CocoaPods 团队工具：墨刀、Teambition、Worktile、Trello、Bugtags 开放平台：微信、支付宝、极光、个推、神策  致谢 感谢您花时间阅读我的简历，期待能有机会和您共事。</description>
+    </item>
+    
+    <item>
+      <title>2017回顾</title>
+      <link>https://cocoaroger.github.io/post/2017/</link>
+      <pubDate>Mon, 01 Jan 2018 16:41:53 +0800</pubDate>
+      
+      <guid>https://cocoaroger.github.io/post/2017/</guid>
+      <description>工作  在搜布完整工作一年, 小伙伴们慢慢都走了, 公司裁员缩减开支. 之前做的 CRM、金管家也一个个不做了. 在主APP做了iOS布友圈、做了安卓和 iOS 下拉刷新, 为主APP修改项目结构. 到了年底从零开始做极速找布, 付费找布需求还是非常旺盛的, 但是这中间撮合找布的过程真的是很复杂, 根据用户的需求描述找到完全匹配真的很难, 能给到的只能是一些相似的匹配方案. 中间环节还涉及剪样、撮合供应商在搜布开店铺, 这还需要解决他们线上交易的问题. 明年是否能规模化找到人去找布, 去促成交易这件事都是很难的, 任务很艰巨. 个人感觉为公司做的贡献不多, 投入产出比很少.  个人能力  这一年开始接触的语言 js, kotlin. 本想再认真看看 go、python、node, 但是由于工作原因学习了 Android , 开始学习 kotlin. 对 swift 的精进, 目前算来已经做了有4个项目. 三个业余一个公司. 熟练运用 swift 开发项目. 关于 android, 学习了 gradle、页面布局、打包分发、项目架构, 具体功能细节没有深究研究, 只有开发项目遇到再说, 这是个踩坑的过程. 学习了 React, React Native. 初步能搭建一个项目, 构建项目导航. 感觉能用 js 写一些两端通用的页面, 真的是很节省开发时间. 但是写整个项目的坑还有待去踩. 自己搭建VPN服务 改变了自己对学习新事物的看法，一切的东西只要迈出第一步，没有想象中那么难，不要给自己设置障碍。  看书  微信读书:  没看完：穷查理宝典、影响力、思考快与慢、穷爸爸富爸爸、未来简史、失控、沉默的大多数、人生有何意义、人生元编程、苏菲的世界、1984、十杆枪 完整看完：把时间当朋友、埃隆马斯克、我们仨、白鹿原、黄金时代、人类简史、接纳不完美的自己、腾讯传、支付战争  实体书： 好好学习、旅行的路上这样拍、从你的全世界路过、设计师谈家居色彩 听了许多袁腾飞讲历史，开始对历史感兴趣，对世界上的人文开始感兴趣  生活 与老婆因为分隔两地的问题，没有给到她安全感，是我没有能够敏锐感受到然后避免掉。我个人这一年没有注重两人的感情培养，而更多时间投入工作学习，这个明年需要改善。明年结婚生子，蜜月旅行，给老婆和自己一个美满的家庭，有一个美好家庭对事业有帮助，有家人在后面支持很重要。</description>
+    </item>
+    
+    <item>
       <title>使用 fastlane</title>
-      <link>https://cocoaroger.github.io/post/use_fastlane/</link>
+      <link>https://cocoaroger.github.io/post/use-fastlane/</link>
       <pubDate>Tue, 26 Sep 2017 14:11:54 +0800</pubDate>
       
-      <guid>https://cocoaroger.github.io/post/use_fastlane/</guid>
+      <guid>https://cocoaroger.github.io/post/use-fastlane/</guid>
       <description>以下是我集成 fastlane 的过程
 安装 fastlane sudo gem install fastlane
 初始化 fastlane cd 到项目目录 执行 fastlane init
