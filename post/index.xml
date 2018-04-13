@@ -6,10 +6,33 @@
     <description>Recent content in Posts on cocoaroger</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Apr 2018 16:41:53 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 10 Apr 2018 11:21:36 +0800</lastBuildDate>
     
 	<atom:link href="https://cocoaroger.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CocoaPods公有/私有库管理</title>
+      <link>https://cocoaroger.github.io/post/cocoapods/</link>
+      <pubDate>Tue, 10 Apr 2018 11:21:36 +0800</pubDate>
+      
+      <guid>https://cocoaroger.github.io/post/cocoapods/</guid>
+      <description>创建公有库 注册 CocoaPods 账号 注册一个CocoaPods账号，我们使用终端注册, email 用你的 GitHub 邮箱
+pod trunk register &#39;GitHub_email&#39; &#39;user_name&#39; --verbose  查看注册信息
+pod trunk me  创建 git 仓库 在 GitHub 创建一个公开项目，项目中必须包含几个文件 * LICENSE: 开源许可证 * README.md: 仓库说明 * CRMediator.podspec: CocoaPods 的描述文件
+创建 .podspec pod spec create CRMediator   修改描述文件,例如： ``` Pod::Spec.new do |s| s.name = &amp;lsquo;CRMediator&amp;rsquo; s.summary = &amp;lsquo;组件化中间件&amp;rsquo; s.version = &amp;lsquo;0.0.1&amp;rsquo; s.homepage = &amp;lsquo;https://github.com/cocoaroger/CRMediator&#39; s.license = { :type =&amp;gt; &amp;lsquo;MIT&amp;rsquo;, :file =&amp;gt; &amp;lsquo;LICENSE&amp;rsquo; } s.</description>
+    </item>
+    
+    <item>
+      <title>iOS组件化实践</title>
+      <link>https://cocoaroger.github.io/post/meditor/</link>
+      <pubDate>Mon, 02 Apr 2018 17:03:05 +0800</pubDate>
+      
+      <guid>https://cocoaroger.github.io/post/meditor/</guid>
+      <description>前述  目前业界主要两种方式：URL/protocol 注册调度、runtime 调度 此处我采用的 runtime 调度法，参考Casa Taloyum 组件化方案 以 GitHub 中搭建一个新项目为例，之前在公司是用公司搭的gitlab服务器； 在实践后的一些想法，一个项目如果有几十人维护多个子项目时，采用私有仓库源，同时维护多个子项目，是非常好的团队管理方式； 但是如果一个团队人数不多，我觉得就会为团队成员带来一些维护私有仓库的成本，降低了灵活性；因此我在公司时采用了中间件的方案，但是没有采用管理私有仓库源； CRMediator 已发布到公有仓库 此处实践是采用私有库组件化管理  结果 https://github.com/cr-atomic
+准备工作  在 GitHub 页面右上角点击 + 然后 New organization`，创建一个 organization 存放源仓库和组件 创建一个 GitHub repo，这个 repo 作为私有 podspecs，可参考[CocoaPods公有/私有库管理]() 创立一个文件夹，例如 Project，把我们的主工程文件夹放到 Project 下，后面的组件和中间件都放在该文件夹  实现效果描述 MainProject是一个非常简单的应用，一共就三个页面。首页 push 到 AViewController，AViewController push 到 BViewController。我们可以理解成这个工程由三个业务组成：首页、A业务、B业务。
+我们需要为此做四个私有Pod： * A业务Pod（以后简称A Pod） * 方便其他人调用A业务的CRMediator category的Pod（以后简称A_Category Pod） * A_Category Pod本质上只是一个方便方法，它对A Pod不存在任何依赖 * B业务Pod（以后简称B Pod） * 方便其他人调用B业务的CRMediator category的Pod（以后简称B_Category Pod）</description>
+    </item>
     
     <item>
       <title>iOS开发简历</title>
@@ -17,7 +40,7 @@
       <pubDate>Sun, 01 Apr 2018 16:41:53 +0800</pubDate>
       
       <guid>https://cocoaroger.github.io/post/resume/</guid>
-      <description>联系方式  手机：17338665021 Email：coacoaroger@gmail.com  个人信息  吴宣强/男/1990 本科/重庆理工大学软件工程系 工作年限：5年 技术博客：https://cocoaroger.github.io/ Github：https://github.com/cocoaroger 期望职位：iOS开发工程师 期望城市：重庆/成都  工作经历 宁波搜布信息科技有限公司(上海)(2016.6 ~ 2018.1) 搜布APP  负责重构项目架构，制定OC编写规范，使代码更易于维护，便于多人协同开发 实践组件化开发，通过中间件的方式声明接口，提高项目的可读性和可维护性 开发登录注册优化、布友圈、店铺主页功能模块 布友圈模块中，使用了YYKit的异步加载方案，保证列表在多图、多文本的复杂情况下仍保持60fps 店铺主页中遇到ScrollView滚动冲突，最终采用通知的方式，在合适的滚动时机，通知内外ScrollView是否可滚动，从而达到类似淘宝店铺主页效果  CRM(Swift)  独立负责项目架构和功能开发 熟练运用Swift各种特性，函数式编程、optional、enum定义网络请求接口、typealias等 版本迭代优化  上海友闲信息科技有限公司(2014.12 ~ 2015.8) 玩票卖家APP  负责项目架构和功能开发 使用科大讯飞语音做类似滴滴抢单播报 版本迭代优化  重庆汇展网络技术有限公司(2014.12 ~ 2015.8) 淘会场  负责大部分封装UI组件和功能开发 版本迭代优化  重庆掌龙科技有限公司(2013.7 ~ 2014.12) 乐途直营店  独立负责项目架构和功能开发 版本迭代优化  技能清单  熟练使用Objective-C、Swift，了解JavaScript、Kotlin、Java、React Native 熟悉Objective-C内存管理机制、Runtime、Runloop 熟悉OC第三方库：AFNetworking、SDWebImage、Masonry、MJRefresh、MJExtention等 熟悉Swift第三方库：Alamofire、Kingfisher、SnapKit、SwiftyJSON、ObjectMapper等 版本管理：Git、SVN、CocoaPods 团队工具：墨刀、Teambition、Worktile、Trello、Bugtags 开放平台：微信、支付宝、极光、个推、神策  致谢 感谢您花时间阅读我的简历，期待能有机会和您共事。</description>
+      <description>联系方式  手机：17338665021 Email：coacoaroger@gmail.com  个人信息  吴宣强/男/1990 本科/重庆理工大学软件工程系 工作年限：5年 技术博客：https://cocoaroger.github.io/ Github：https://github.com/cocoaroger 简书：https://www.jianshu.com/u/0491c59e8017 期望职位：iOS开发工程师 期望城市：重庆/成都  工作经历 宁波搜布信息科技有限公司(上海)(2016.6 ~ 2018.1) 搜布APP  负责重构项目架构，制定OC编写规范，使代码更易于维护，便于多人协同开发 实践组件化开发，通过中间件的方式声明接口，提高项目的可读性和可维护性 开发登录注册优化、布友圈、店铺主页功能模块 布友圈模块中，使用了YYKit的异步加载方案，保证列表在多图、多文本的复杂情况下仍保持60fps 店铺主页中遇到ScrollView滚动冲突，最终采用通知的方式，在合适的滚动时机，通知内外ScrollView是否可滚动，从而达到类似淘宝店铺主页效果  CRM(Swift)  独立负责项目架构和功能开发 熟练运用Swift各种特性，函数式编程、optional、enum定义网络请求接口、typealias等 版本迭代优化  上海友闲信息科技有限公司(2014.12 ~ 2015.8) 玩票卖家APP  负责项目架构和功能开发 使用科大讯飞语音做类似滴滴抢单播报 版本迭代优化  重庆汇展网络技术有限公司(2014.12 ~ 2015.8) 淘会场  负责大部分封装UI组件和功能开发 版本迭代优化  重庆掌龙科技有限公司(2013.7 ~ 2014.12) 乐途直营店  独立负责项目架构和功能开发 版本迭代优化  技能清单  熟练使用Objective-C、Swift，了解JavaScript、Kotlin、Java、React Native 熟悉Objective-C内存管理机制、Runtime、Runloop 熟悉OC第三方库：AFNetworking、SDWebImage、Masonry、MJRefresh、MJExtention等 熟悉Swift第三方库：Alamofire、Kingfisher、SnapKit、SwiftyJSON、ObjectMapper等 版本管理：Git、SVN、CocoaPods 团队工具：墨刀、Teambition、Worktile、Trello、Bugtags 开放平台：微信、支付宝、极光、个推、神策  致谢 感谢您花时间阅读我的简历，期待能有机会和您共事。</description>
     </item>
     
     <item>
