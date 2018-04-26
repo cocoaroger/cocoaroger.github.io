@@ -71,7 +71,7 @@
 
             <div class="post-title">
                 <p class="footnote">
-                    <time class="">2018-04-02</time>
+                    <time class="">2018-04-10</time>
 		            
                     
                     
@@ -106,7 +106,7 @@
 
 <ol>
 <li>在 GitHub 页面右上角点击 <code>+</code> 然后 New organization`，创建一个 organization 存放源仓库和组件</li>
-<li>创建一个 GitHub repo，这个 repo 作为私有 podspecs，可参考[CocoaPods公有/私有库管理]()</li>
+<li>创建一个 GitHub repo，这个 repo 作为私有 podspecs，可参考<a href="https://cocoaroger.github.io/post/cocoapods/">CocoaPods公有/私有库管理</a></li>
 <li>创立一个文件夹，例如 Project，把我们的主工程文件夹放到 Project 下，后面的组件和中间件都放在该文件夹</li>
 </ol>
 
@@ -280,13 +280,13 @@ pod 'B', :git =&gt; 'https://github.com/cr-atomic/B.git'
 
 <h3 id="侵入性问题">侵入性问题</h3>
 
-<p>正如你所见，CTMediator组件化方案的实施非常安全。因为它并不存在任何侵入性的代码修改。</p>
+<p>正如你所见，CRMediator组件化方案的实施非常安全。因为它并不存在任何侵入性的代码修改。</p>
 
 <p>对于响应者来说，什么代码都不用改，只需要包一层Target-Action即可。例如本例中的B业务线作为A业务的响应者时，不需要修改B业务的任何代码。</p>
 
-<p>对于调用者来说，只需要把调用方式换成CTMediator调用即可，其改动也不涉及原有的业务逻辑，所以是十分安全的。</p>
+<p>对于调用者来说，只需要把调用方式换成CRMediator调用即可，其改动也不涉及原有的业务逻辑，所以是十分安全的。</p>
 
-<p>另外一个非侵入性的特征体现在，基于CTMediator的组件化方案是可以循序渐进地实施的。这个方案的实施并不要求所有业务线都要被独立出来成为组件，实施过程也并不会修改未组件化的业务的代码。</p>
+<p>另外一个非侵入性的特征体现在，基于CRMediator的组件化方案是可以循序渐进地实施的。这个方案的实施并不要求所有业务线都要被独立出来成为组件，实施过程也并不会修改未组件化的业务的代码。</p>
 
 <p>在独立A业务线的过程中如果涉及其它业务线（B业务线）的调用，就只需要给到Target对象即可，Target对象本身并不会对未组件化的业务线（B业务线）产生任何的修改。而且将来如果对应业务线需要被独立出去的时候，也仅需要把Target对象一起复制过去就可以了。</p>
 
@@ -296,7 +296,7 @@ pod 'B', :git =&gt; 'https://github.com/cr-atomic/B.git'
 
 <p>CTMediator没有任何注册逻辑的代码，避免了注册文件的维护和管理。Category给到的方法很明确地告知了调用者应该如何调用。</p>
 
-<p>例如B_Category给到的- (UIViewController *)B_viewControllerWithContentText:(NSString *)contentText;方法。这能够让工程师一眼就能够明白使用方式，而不必抓瞎拿着URL再去翻文档。</p>
+<p>例如B_Category给到的- (UIViewController *)bViewControllerWithText:(NSString *)text;方法。这能够让工程师一眼就能够明白使用方式，而不必抓瞎拿着URL再去翻文档。</p>
 
 <p>这可以很大程度提高工作效率，同时降低维护成本。</p>
 
