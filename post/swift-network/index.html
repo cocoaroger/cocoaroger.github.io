@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  
+  <meta charset="utf-8">
+  <title>Swift 网络请求封装</title>
+  <meta name="description" content="Swift 网络请求封装">
+  <meta name="author" content="cocoaroger">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cocoaroger.github.io/css/fonts.css">
+  
+  
+  <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+  
+  
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/grids-responsive-min.css">
+  
+  <link rel="stylesheet" href="https://cocoaroger.github.io/css/custom.css">
+
+  
+  
+  <link rel="stylesheet" href="https://cocoaroger.github.io/highlight/styles/default.css">
+  
+  <script src="https://cocoaroger.github.io/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <meta name="generator" content="Hugo 0.26" />
+  
+</head>
+<body>
+
+<div class="header pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+    <div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="desktop pure-menu pure-menu-horizontal nav-menu">
+            
+            <a href="https://cocoaroger.github.io/" class="site-title pure-menu-heading">cocoaroger</a>
+            <ul class="pure-menu-list">
+				
+                <li class="pure-menu-item">
+                    <a href="https://cocoaroger.github.io/about/" class="pure-menu-link">About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mobile pure-menu nav-menu">
+            <a href="/" class="pure-menu-heading" id="toggle-home">cocoaroger</a>
+            <a href="#" id="toggle-btn">&#9776;</a>
+            <ul class="pure-menu-list" id="toggle-content" style="display:none;">
+                
+				
+                <li class="pure-menu-item">
+                    <a href="https://cocoaroger.github.io/about" class="pure-menu-link">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+
+<div class="pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+	<div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="post">
+
+            <div class="post-title">
+                <p class="footnote">
+                    <time class="">2018-05-29</time>
+		            
+                    
+                    
+
+                    
+
+                    
+                </p>
+                <h2>Swift 网络请求封装</h2>
+            </div>
+
+            <div class="post-content">
+                
+
+<p>网络请求封装主要利用 Swift 的 protocol 和 enum 特性</p>
+
+<h3 id="定义一个protocol-用于规范网络请求接口">定义一个protocol, 用于规范网络请求接口</h3>
+
+<pre><code>/// 接口类型
+protocol TargetType {
+  /// 接口地址
+  var serviceAddress: String { get }
+  /// 参数信息
+  var parameters: [String: Any]? { get }
+  /// 请求类型
+  var method: HTTPMethod { get }
+}
+</code></pre>
+
+<p>HTTPMethod由Alamofire定义如下:</p>
+
+<pre><code>public enum HTTPMethod: String {
+    case options = &quot;OPTIONS&quot;
+    case get     = &quot;GET&quot;
+    case head    = &quot;HEAD&quot;
+    case post    = &quot;POST&quot;
+    case put     = &quot;PUT&quot;
+    case patch   = &quot;PATCH&quot;
+    case delete  = &quot;DELETE&quot;
+    case trace   = &quot;TRACE&quot;
+    case connect = &quot;CONNECT&quot;
+}
+</code></pre>
+
+<h3 id="以订单列表和订单详情请求做声明举例">以订单列表和订单详情请求做声明举例</h3>
+
+<p>以一个 enum 实现 TargetType protocol，巧妙运用 swift 可以在 enum 自生做 <code>switch case</code> 操作</p>
+
+<pre><code>enum OrderTarget: TargetType {
+  /// 订单列表接口
+  case orders(uid: Int)
+  /// 订单详情接口
+  case detail(no: String)
+
+  // MARK: - 参数说明
+  var serviceAddress: String {
+    switch self {
+    case .orders:
+      return &quot;orders&quot;
+    case let .detail(no):
+      return &quot;orders/\(no)&quot;
+    }
+  }
+
+  var parameters: [String : Any]? {
+    switch self {
+    case let .orders(uid):
+      return [&quot;uid&quot;: uid]
+    default:
+      return nil
+    }
+  }
+
+  var method: HTTPMethod {
+    switch self {
+    default:
+      return .get
+    }
+  }
+}
+</code></pre>
+
+<h3 id="网络请求封装">网络请求封装</h3>
+
+<p>网络请求采用了 Alamofire、AlamofireObjectMapper、ObjectMapper、SwiftyJSON</p>
+
+<pre><code>import Foundation
+import AlamofireObjectMapper
+import ObjectMapper
+
+// 请求地址前缀
+private let kBaseURL = &quot;***&quot;
+
+/// 超时时长
+private let kTimeoutIntervalForRequest: TimeInterval = 15
+
+/// 服务器返回的对象封装，根据实际情况定义
+struct Response: Mappable, CustomStringConvertible {
+  var status: Int?
+  var code: Int?
+  var message: String?
+  var result: [String: Any]?
+  var reason: String?
+  var stack: String?
+
+  init?(map: Map) {}
+
+  mutating func mapping(map: Map) {
+    status &lt;- map[&quot;status&quot;]
+    code &lt;- map[&quot;code&quot;]
+    message &lt;- map[&quot;message&quot;]
+    result &lt;- map[&quot;result&quot;]
+    reason &lt;- map[&quot;reason&quot;]
+    stack &lt;- map[&quot;stack&quot;]
+  }
+
+  public var description: String {
+    return &quot;status: \(String(describing: status))\n message: \(String(describing: message))\n result: \(String(describing: result))&quot;
+  }
+}
+
+/// 错误类型
+///
+/// - netError: 网络异常
+/// - serverError: 服务器异常 500
+/// - sessionError: 用户未授权（签名错误或无权限）
+/// - nodataError: 没有数据
+/// - otherError: 其他错误
+enum NetworkError: CustomStringConvertible {
+  case netError(String)
+  case serverError(String)
+  case sessionError(String)
+  case nodataError(String)
+  case otherError(String)
+
+  public var description: String {
+    switch self {
+    case let .netError(text):
+      return text
+    case let .serverError(text):
+      return text
+    case let .nodataError(text):
+      return text
+    case let .sessionError(text):
+      return text
+    case let .otherError(text):
+      return text
+    }
+  }
+}
+
+/// 封装返回结果
+///
+/// - success: 成功结果
+/// - error: 错误结果
+enum NetworkResult {
+  case success(Response)
+  case error(NetworkError)
+}
+
+/// 网络请求
+struct Network: RequestAdapter {
+  static let `default`: Network = {
+    let network = Network()
+    network.sessionManager.adapter = network
+    return network
+  }()
+
+  private let sessionManager: SessionManager = {
+    let config = URLSessionConfiguration.default
+    config.timeoutIntervalForRequest = kTimeoutIntervalForRequest
+    let sessionManager = SessionManager(configuration: config)
+    return sessionManager
+  }()
+
+  public func adapt(_ urlRequest: URLRequest) throws -&gt; URLRequest {
+    return urlRequest
+  }
+
+  /// 发出请求
+  ///
+  ///   - target: 请求目标，包含方法信息和参数信息
+  ///   - completionHandler: 结果回调
+  ///   - Returns: DataRequest 实例
+  func request(target: TargetType,
+               completionHandler: @escaping (NetworkResult) -&gt; Void) -&gt; Request {
+    let url = kBaseURL + target.serviceAddress
+
+    var headers = SessionManager.defaultHTTPHeaders
+    // 请求头处理...
+
+    let request = self.sessionManager.request(url,
+                                              method: target.method,
+                                              parameters: target.parameters,
+                                              encoding: URLEncoding.default,
+                                              headers: headers)
+
+    return request.responseJSON { (originalResponse) in
+      self.dealResponse(originalResponse: originalResponse, completionHandler: completionHandler)
+    }
+  }
+
+  /// 统一处理响应结果
+  ///
+  /// - Parameters:
+  ///   - originalResponse: 原始请求
+  ///   - completionHandler: 成功回调
+  private func dealResponse(originalResponse: DataResponse&lt;Any&gt;,
+                            completionHandler: @escaping (NetworkResult) -&gt; Void) {
+    if let url = originalResponse.response?.url?.absoluteString {
+      print(&quot;请求地址：\(url)&quot;)
+    }
+    let statusCode = originalResponse.response?.statusCode ?? -1
+
+    // 根据自己的逻辑对结果判断
+    switch originalResponse.result {
+    case let .success(value):
+      let json = JSON(value)
+      print(&quot;\(statusCode) 返回结果：\(json)&quot;)
+
+      var resp = Response(JSON: json.dictionaryObject!)!
+      if statusCode == 401 {
+        let msg = resp.message ?? &quot;登录信息失效&quot;
+
+        if resp.code == 40006 {
+          completionHandler(.error(.otherError(msg)))
+        } else {
+            // 此处可以做全局通用的登录失效提示如：
+            /*
+            DispatchQueue.main.async {
+              HUD.showError(text: resultError.description)
+            }
+            */
+        }
+        completionHandler(.error(.sessionError(msg)))
+        return
+      } else if statusCode == 422 {
+        completionHandler(.error(.otherError(resp.msg ?? &quot;请求参数错误&quot;)))
+        return
+      } else if statusCode == 400 || statusCode == 403 || statusCode == 404 {
+        completionHandler(.error(.otherError(resp.msg ?? &quot;请求失败&quot;)))
+        return
+      } else if statusCode == 500 {
+        completionHandler(.error(.otherError(resp.msg ?? &quot;服务器异常&quot;)))
+        return
+      } else {
+        completionHandler(.success(resp))
+      }
+      break
+
+    case let .failure(error):
+      let description = error.localizedDescription
+      print(&quot;\(statusCode) 错误信息：\(description)&quot;)
+
+      if description == &quot;已取消&quot; {
+        return
+      }
+
+      let resultError: NetworkError = .netError(description)
+      completionHandler(.error(resultError))
+      // 此处可以做全局通用的网络异常提示,如：
+      /*
+      DispatchQueue.main.async {
+        HUD.showError(text: resultError.description) // 弹出全局通用错误提示
+      }
+      */
+      break
+    }
+  }
+}
+
+</code></pre>
+
+<h3 id="网络请求调用示例">网络请求调用示例</h3>
+
+<pre><code>let request = Network.default.request(target: OrderTarget.detail(no: &quot;1111&quot;))
+    { [unowned self] (result) in
+      switch result {
+      case let .success(resp):
+        // 成功处理...
+        break
+      case let .error(error):
+        // 错误处理...
+        switch error {
+        case let .otherError(text):
+        // CRHUD.showToast(text)
+          break
+        default:
+          break
+        }
+        break
+      }
+    }
+</code></pre>
+
+            </div>
+        </div>
+	</div>
+    <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+<div class="footer pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+    <div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="footer-content">
+		  <div class="pure-menu pure-menu-horizontal">
+              <ul>
+			      
+                  <li class="pure-menu-heading" id="foot-name">cocoaroger:</li>
+                  
+				  
+                  
+          
+                  
+                  <li class="pure-menu-item">
+                      <a href="https://github.com/cocoaroger" class="pure-menu-link">GitHub</a>
+                  </li>
+                  
+          
+                  
+          
+                  
+          
+                  
+                  <li class="pure-menu-item">
+                      <a href="https://twitter.com/roger_wxq" class="pure-menu-link">Twitter</a>
+                  </li>
+                  
+          
+              </ul>
+              <a href="#" class="pure-menu-heading pull-right" id="gototop-btn">↑↑</a>
+          </div>
+		  
+		</div>
+	  </div>
+      <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+
+<script src="https://cocoaroger.github.io/js/jquery.min.js" type="text/javascript"></script>
+<script src="https://cocoaroger.github.io/js/jquery.timeago.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    $("time.timeago").timeago();
+  })
+  $("#toggle-btn").click(function(){
+    $("#toggle-content").toggle();
+    if($(this).html() === "☰") {
+        $(this).html("X")
+    } else {
+        $(this).html("☰")
+    }
+  });
+  $(window).resize(function(){
+    if(window.innerWidth > 768) {
+      $(".desktop").removeAttr("style");
+    }
+  });
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-104439613-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

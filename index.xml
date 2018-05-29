@@ -6,10 +6,21 @@
     <description>Recent content on cocoaroger</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Apr 2018 17:03:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 May 2018 15:58:34 +0800</lastBuildDate>
     
 	<atom:link href="https://cocoaroger.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Swift 网络请求封装</title>
+      <link>https://cocoaroger.github.io/post/swift-network/</link>
+      <pubDate>Tue, 29 May 2018 15:58:34 +0800</pubDate>
+      
+      <guid>https://cocoaroger.github.io/post/swift-network/</guid>
+      <description>网络请求封装主要利用 Swift 的 protocol 和 enum 特性
+定义一个protocol, 用于规范网络请求接口 /// 接口类型 protocol TargetType { /// 接口地址 var serviceAddress: String { get } /// 参数信息 var parameters: [String: Any]? { get } /// 请求类型 var method: HTTPMethod { get } }  HTTPMethod由Alamofire定义如下:
+public enum HTTPMethod: String { case options = &amp;quot;OPTIONS&amp;quot; case get = &amp;quot;GET&amp;quot; case head = &amp;quot;HEAD&amp;quot; case post = &amp;quot;POST&amp;quot; case put = &amp;quot;PUT&amp;quot; case patch = &amp;quot;PATCH&amp;quot; case delete = &amp;quot;DELETE&amp;quot; case trace = &amp;quot;TRACE&amp;quot; case connect = &amp;quot;CONNECT&amp;quot; }  以订单列表和订单详情请求做声明举例 以一个 enum 实现 TargetType protocol，巧妙运用 swift 可以在 enum 自生做 switch case 操作</description>
+    </item>
     
     <item>
       <title>iOS组件化实践</title>
@@ -28,9 +39,9 @@
       <pubDate>Sun, 01 Apr 2018 16:41:53 +0800</pubDate>
       
       <guid>https://cocoaroger.github.io/post/resume/</guid>
-      <description>联系方式  手机：17338665021 Email：coacoaroger@gmail.com  个人信息  吴宣强/男/1990 本科/重庆理工大学软件工程系 工作年限：5年 技术博客：https://cocoaroger.github.io/ Github：https://github.com/cocoaroger 简书：https://www.jianshu.com/u/0491c59e8017 期望职位：iOS开发工程师 期望城市：重庆  工作经历 宁波搜布信息科技有限公司(上海)(2016.6 ~ 2018.1)  在搜布期间，开发完功能之余，不断思考和优化项目架构，提升开发效率，减少 bug 量，自己有了一套成熟的开发模式
- 搜布  负责优化项目结构，制定OC代码规范 推动实践组件化开发，共有3人开发，通过中间件进行多人开发，提高项目的可读性和易用性，实践方案：CRMediator 参与开发登录注册优化、布友圈、店铺主页等功能模块 布友圈为类似朋友圈的模块，实践了YYKit的异步加载方案，保证列表在多图、多文本的情况下仍保持60fps的流畅性 店铺主页为类似淘宝店铺主页效果，存在滚动视图嵌套手势问题，最终通过一些特殊设计解决，解决方案： CRShopDetail  CRM(Swift)  该项目是为搜布销员工定制的CRM 该项目是在已有Android版的情况下，花了两周复制了一个iOS版 独立负责架构设计和功能开发、版本迭代优化 开发中实践许多 Swift 特性，提升开发效率、代码安全性、易维护性，降低 bug 率  搜布金管家  该项目主要用于向搜布卖家展示店铺信息，销售情况，强化店铺客服和销售业绩的管理 独立负责架构设计和功能开发、版本迭代优化  上海友闲信息科技有限公司(2015.10 ~ 2016.6)  频繁的版本迭代，增强了自己的应变能力和封装意识，最后达到轻松应对
- 玩票卖家  架构搭建，尽可能做到层次清晰，模块化，耦合少，可复用函数逻辑完全分离 项目开发时间估算，从产品整体到细节的深入讨论与思考，技术预演，技术方案定制 抢单功能中，通过状态监听的方式，实现在不同状态下复杂界面交互实现  重庆汇展网络技术有限公司(2014.12 ~ 2015.8) 淘会场  负责封装部分公共UI组件 开发发布需求、场地搜索、询价单模块  重庆掌龙科技有限公司(2013.</description>
+      <description>联系方式  手机：17338665021 Email：cocoaroger@163.com  个人信息  吴宣强/男/1990 本科/重庆理工大学/软件工程系 工作年限：5年 技术博客：https://cocoaroger.github.io/ Github：https://github.com/cocoaroger 简书：https://www.jianshu.com/u/0491c59e8017 期望职位：iOS开发工程师 期望城市：重庆  工作经历 宁波搜布信息科技有限公司(上海)(2016.6 ~ 2018.1)  在职期间独立开发和维护 CRM 和 金管家 ，协助优化 搜布主APP ，开发其中部分模块；后期Android同事离职，我接管了Android版 *CRM*，自学了一个月的 ReactNative 和 Android，学会它们的运作原理和开发模式；为Android和iOS 搜布主APP 重写下拉刷新控件。
+ 搜布  负责优化项目结构，制定OC代码规范，CodeReview，提出优化建议 推动实践组件化开发，共有3人开发，提高项目的可读性和易用性 参与开发登录注册优化、布友圈、店铺主页等功能模块 布友圈为类似朋友圈的模块，实践了YYKit的优化方案，保证列表在多图、多文本的情况下仍保持60fps的流畅性 店铺主页为类似淘宝店铺主页效果，存在滚动视图嵌套手势问题，最终通过一些特殊设计解决 重写iOS和Android的下拉刷新  CRM(Swift)  该项目是为搜布销员工定制的CRM 该项目是在已有Android版的情况下，花了两周复制了一个iOS版 独立负责架构设计和功能开发、版本迭代优化 开发中实践许多 Swift 特性，提升开发效率、代码安全性、易维护性、写出优秀简洁的代码，降低 bug 率  金管家  该项目主要用于向搜布卖家展示店铺信息，销售情况，强化店铺客服和销售业绩的管理 独立负责架构设计和功能开发 版本迭代优化  上海友闲信息科技有限公司(2015.10 ~ 2016.6)  在职期间，前期每天工作到晚上10点左右，用了两个星期左右的时间赶出最小可用模型；所有人一起讨论需求，揣摩用户心里，过得非常充实的；老板是个处女座，对UI细节要求严格，锻炼了我对细节的把控能力和抗压能力。
+ 玩票卖家  该项目构建了一个二手票务平台，解决用户从一手市场买不到票、害怕从黄牛手中买到假票等需求，做中间担保。 玩票卖家是为有票的卖家设计，卖家可以在APP上抢单或挂票 独立负责项目搭建与代码实现，项目主要采用MVC架构模式，小部分功能采用了MVVM架构模式 部分功能使用了ReactiveCocoa的实现，主要利用了它的延时响应、信号合并、信号过滤，以及与MVVM架构的配合使用 布局采用了Masonry，项目中采用了纯代码写视图布局，有80%都使用Masonry，20%使用Frame  重庆汇展网络技术有限公司(2014.</description>
     </item>
     
     <item>
