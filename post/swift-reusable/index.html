@@ -4,8 +4,8 @@
 
   
   <meta charset="utf-8">
-  <title>Posts</title>
-  <meta name="description" content="Posts">
+  <title>Swift Reusable 让 UITableViewCell、UICollectionViewCell扩展一个identifier动态属性</title>
+  <meta name="description" content="Swift Reusable 让 UITableViewCell、UICollectionViewCell扩展一个identifier动态属性">
   <meta name="author" content="cocoaroger">
 
   
@@ -64,178 +64,69 @@
 </div>
 
 
-
 <div class="pure-g">
     <div class="pure-u-1-24 pure-u-md-5-24"></div>
 	<div class="pure-u-11-12 pure-u-md-5-8">
-	<div class="post-content">
-	  <p class="posts-name">Posts:</p>
+        <div class="post">
 
-	  <ul class="posts">
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/swift-reusable/">Swift Reusable 让 UITableViewCell、UICollectionViewCell扩展一个identifier动态属性</a>
+            <div class="post-title">
+                <p class="footnote">
+                    <time class="">2018-05-30</time>
+		            
+                    
+                    
 
-		  <p class="footnote">
-			<time datetime="2018-05-30T10:49:18&#43;08:00" class="post-list timeago">2018-05-30T10:49:18&#43;08:00</time>
+                    
 
-			
+                    
+                </p>
+                <h2>Swift Reusable 让 UITableViewCell、UICollectionViewCell扩展一个identifier动态属性</h2>
+            </div>
 
-			
+            <div class="post-content">
+                
 
-			
+<h4 id="定义一个-reusable-协议-遵从这个协议需要有一个静态属性identifier">定义一个 Reusable 协议，遵从这个协议需要有一个静态属性identifier</h4>
 
-			
+<pre><code>/// 可复用协议
+protocol Reusable: class {
+  /// 复用的id
+  static var identifier: String { get }
+}
+</code></pre>
 
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/swift-network/">Swift 网络请求封装</a>
+<h4 id="利用-swift-extention-的特性-让-uiview-默认以类名作为-identifier">利用 swift extention 的特性，让 UIView 默认以类名作为 identifier</h4>
 
-		  <p class="footnote">
-			<time datetime="2018-05-29T15:58:34&#43;08:00" class="post-list timeago">2018-05-29T15:58:34&#43;08:00</time>
+<pre><code>extension Reusable where Self: UIView {
+  static var identifier: String {
+    return NSStringFromClass(self)
+  }
+}
+</code></pre>
 
-			
+<h4 id="扩展-uitableviewcell-uicollectionviewcell-都默认实现-reusable-协议">扩展 UITableViewCell、UICollectionViewCell 都默认实现 Reusable 协议</h4>
 
-			
+<pre><code>extension UITableViewCell: Reusable {}
+extension UICollectionViewCell: Reusable {}
+</code></pre>
 
-			
+<blockquote>
+<p>从此所有 UITableViewCell、UICollectionViewCell 都有了 identifier 属性，不用每次都显示声明 identifier</p>
+</blockquote>
 
-			
+<pre><code>func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier)
+    // 做cell处理
+    return cell
+  }
+</code></pre>
 
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/meditor/">iOS组件化实践</a>
+<blockquote>
+<p>以此为例，我们如果想要给某些类拥有某些属性并且设置默认值，就可以通过协议扩展的方式实现</p>
+</blockquote>
 
-		  <p class="footnote">
-			<time datetime="2018-04-10T17:03:05&#43;08:00" class="post-list timeago">2018-04-10T17:03:05&#43;08:00</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/resume/">iOS开发工程师简历</a>
-
-		  <p class="footnote">
-			<time datetime="2018-04-01T16:41:53&#43;08:00" class="post-list timeago">2018-04-01T16:41:53&#43;08:00</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/use-fastlane/">使用 fastlane</a>
-
-		  <p class="footnote">
-			<time datetime="2017-09-26T14:11:54&#43;08:00" class="post-list timeago">2017-09-26T14:11:54&#43;08:00</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/hugo-deploy/">Hugo 自动化部署脚本 deploy.py</a>
-
-		  <p class="footnote">
-			<time datetime="2017-08-26T17:28:30&#43;08:00" class="post-list timeago">2017-08-26T17:28:30&#43;08:00</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/oc-guide-style/">Objective-C Guide Style</a>
-
-		  <p class="footnote">
-			<time datetime="2017-08-26T10:57:31&#43;08:00" class="post-list timeago">2017-08-26T10:57:31&#43;08:00</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-		
-		<li>
-		  
-		  <a href="https://cocoaroger.github.io/post/cocoapods/">CocoaPods公有/私有库管理</a>
-
-		  <p class="footnote">
-			<time datetime="0001-01-01T00:00:00Z" class="post-list timeago">0001-01-01T00:00:00Z</time>
-
-			
-
-			
-
-			
-
-			
-
-		  </p>
-		</li>
-		
-		
-	  </ul>
-	</div>
+            </div>
+        </div>
 	</div>
     <div class="pure-u-1-24 pure-u-md-1-6"></div>
 </div>
